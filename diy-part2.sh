@@ -17,3 +17,4 @@ sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_genera
 # git clone https://github.com/vernesong/OpenClash package/luci-app-openclash
 git clone https://github.com/BoringCat/luci-app-mentohust.git package/luci-app-mentohust
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+git clone https://github.com/esirplayground/luci-app-poweroff.git package/luci-app-poweroff
