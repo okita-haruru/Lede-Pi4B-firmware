@@ -12,6 +12,8 @@
 
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_generate
+# Modify default theme
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
 # passwall比openclash好用所以先注释
 # git clone https://github.com/vernesong/OpenClash package/luci-app-openclash
