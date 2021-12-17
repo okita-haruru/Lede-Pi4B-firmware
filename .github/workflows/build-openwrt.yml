@@ -32,6 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  SERVERCHAN_SCKEY: true
 
 jobs:
   build:
@@ -40,6 +41,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
+
+    - name: TG Message
+      if: env.SERVERCHAN_SCKEY == 'true'
+      run: |
+        curl -k --data chat_id=${{ secrets.TGID }} --data "text=主人：正在为您编译新的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M"),请耐心等待...... 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
 
     - name: Initialization environment
       env:
@@ -60,6 +66,12 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: Load custom feeds
       run: |
@@ -189,3 +201,8 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: TG Message
+      if: env.SERVERCHAN_SCKEY == 'true'
+      run: |
+        curl -k --data chat_id=${{ secrets.TGID }} --data "text=我亲爱的主人您要编译的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M")固件编译成功！" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
