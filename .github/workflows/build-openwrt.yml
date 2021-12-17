@@ -32,6 +32,7 @@ env:
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
+  RELEASE_TAG: R2S
   SERVERCHAN_SCKEY: true
 
 jobs:
