@@ -209,6 +209,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: TG Message
-      if: env.SERVERCHAN_SCKEY == 'true'
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
-        curl -k --data chat_id=${{ secrets.TGID }} --data "text=我亲爱的主人您要编译的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M")固件编译完成 \n $(cat release.txt)" --data "parse_mode='MarkdownV2'" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
+        curl -k --data chat_id=${{ secrets.TGID }} --data "text=我亲爱的主人您要编译的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M")固件编译完成,status:${{ steps.tag.outputs.status }} \n $(cat release.txt)" --data "parse_mode='MarkdownV2'" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
