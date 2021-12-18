@@ -34,6 +34,7 @@ env:
   UPLOAD_COWTRANSFER: false
   UPLOAD_WETRANSFER: false
   UPLOAD_RELEASE: true
+  DATA_DIR: data
   TZ: Asia/Shanghai
   RELEASE_TAG: R2S
   SERVERCHAN_SCKEY: true
@@ -94,6 +95,7 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $DATA_DIR ] && mv $DATA_DIR openwrt/data
         chmod +x $POST_FEEDS_SH
         cd openwrt
         $GITHUB_WORKSPACE/$POST_FEEDS_SH
