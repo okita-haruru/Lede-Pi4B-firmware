@@ -60,3 +60,5 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
 
 echo "Leving package/community"
 popd
+
+exit 0
