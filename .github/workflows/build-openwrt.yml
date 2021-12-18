@@ -24,8 +24,8 @@ env:
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
-  DIY_P1_SH: pre-feed.sh
-  DIY_P2_SH: post-feed.sh
+  PRE_FEEDS_SH: pre-feed.sh
+  POST_FEEDS_SH: post-feed.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -42,6 +42,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
+      fetch-depth: 0
 
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true'
@@ -77,9 +78,9 @@ jobs:
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
-        chmod +x $DIY_P1_SH
+        chmod +x $PRE_FEEDS_SH
         cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P1_SH
+        $GITHUB_WORKSPACE/$PRE_FEEDS_SH
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
@@ -91,9 +92,9 @@ jobs:
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_P2_SH
+        chmod +x $POST_FEEDS_SH
         cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH
+        $GITHUB_WORKSPACE/$POST_FEEDS_SH
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0

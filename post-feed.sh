@@ -1,30 +1,41 @@
 #!/bin/bash
-#
-# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
-#
-# This is free software, licensed under the MIT License.
-# See /LICENSE for more information.
-#
-# https://github.com/P3TERX/Actions-OpenWrt
-# File name: diy-part2.sh
-# Description: OpenWrt DIY script part 2 (After Update feeds)
-#
+# 本脚本在feeds update和feeds install后被执行
 
 # 修改默认ip
 sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_generate
-# 修改默认主题
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 # 修改lede默认的腾讯云镜像为清华镜像
 sed -i 's#mirrors.cloud.tencent.com/lede#mirrors.tuna.tsinghua.edu.cn/openwrt#g' package/lean/default-settings/files/zzz-default-settings
 
+mkdir package/community
+pushd package/community
+
+# 解锁网易云音乐
+rm -rf ../lean/luci-app-unblockmusic
+git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
+
 # Mentohust 校园网上网
-git clone https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git package/mentohust
-git clone https://github.com/BoringCat/luci-app-mentohust.git package/luci-app-mentohust
+git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git mentohust
+git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust.git luci-app-mentohust
 
 # 配置argon主题
-rm -rf package/lean/luci-theme-argon
-git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
-git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
+rm -rf ../lean/luci-theme-argon
+git clone -b 18.06 --depth=1 https://github.com/jerrykuku/luci-theme-argon.git ../lean/luci-theme-argon
+git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git luci-app-argon-config
+sed -i 's/luci-theme-bootstrap/luci-theme-argon-18.06/g' feeds/luci/collections/luci/Makefile
 
-# 安装一些额外的包
+# 在线设备列表
+git clone --depth=1 https://github.com/Kerite/luci-app-onliner.git
+
+# 关机
 git clone https://github.com/esirplayground/luci-app-poweroff.git package/luci-app-poweroff
+
+#ddnsto和易有云
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
+svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
+svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
+
+# 应用过滤
+git clone --depth=1 https://github.com/destan19/OpenAppFilter.git
+
+popd
