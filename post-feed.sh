@@ -13,7 +13,7 @@ sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_genera
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='MikuWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i 's/OpenWrt /MikuWrt /g'
 
-mkdir package/community
+[ -e package/community ] && mkdir package/community
 echo "Entering package/community"
 pushd package/community
 
@@ -46,6 +46,10 @@ svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
 
 # 应用过滤
 git clone --depth=1 https://github.com/destan19/OpenAppFilter.git
+
+# 全能推送
+[ -e ../lean/luci-app-serverchan ] && rm -rf ../lean/luci-app-serverchan
+git clone --depth=1 https://github.com/tty228/luci-app-serverchan.git
 
 # luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld.git
