@@ -18,7 +18,7 @@ pushd package/community
 
 # 解锁网易云音乐
 rm -rf ../lean/luci-app-unblockmusic
-git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
+git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 
 # Mentohust 校园网上网
 git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git mentohust
