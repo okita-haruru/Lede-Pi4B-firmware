@@ -6,11 +6,16 @@
 LEDE_ROOT=$(pwd)
 PACKAGE_ROOT=$LEDE_ROOT/package
 
+alias pushd='pushd $1 > /dev/null'
+alias popd='popd $1 > /dev/null'
+
 # 修改默认ip
+echo "Patching host ip"
 sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_generate
 # 修改lede默认的腾讯云镜像为清华镜像
 # sed -i 's#mirrors.cloud.tencent.com/lede#mirrors.tuna.tsinghua.edu.cn/openwrt#g' package/lean/default-settings/files/zzz-default-settings
 # 修改主机名
+echo "Patching host name"
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='MikuWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i 's/OpenWrt /MikuWrt /g'
 
@@ -46,7 +51,7 @@ git clone --depth=1 https://github.com/Kerite/luci-app-onliner.git
 # 关机
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff.git
 
-#ddnsto和易有云
+# ddnsto和易有云
 svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
 svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
 svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
