@@ -51,7 +51,7 @@ jobs:
       if: env.SERVERCHAN_SCKEY == 'true'
       run: |
          MESSAGE_ID=`curl -k --data chat_id=${{ secrets.TGID }} --data "text=正在为您编译新的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M"),请耐心等待...... 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
-         echo "::set-env name=MESSAGE_ID::$MESSAGE_ID"
+         echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
 
     - name: Initialization environment
       env:
@@ -213,7 +213,7 @@ jobs:
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
-        echo "我亲爱的主人您要编译的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M")固件编译完成" > tgmsg.txt
+        echo "我亲爱的主人您要编译的$RELEASE_TAG\\-$(date +"%Y.%m.%d-%H%M")固件编译完成" > tgmsg.txt
         echo "status:${{ steps.tag.outputs.status }}" >> tgmsg.txt
         cat release.txt >> tgmsg.txt
         TG_SEND_TXT=`cat tgmsg.txt`
