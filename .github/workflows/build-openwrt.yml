@@ -157,8 +157,8 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         # 只有存在.gz或者.img的文件被编译出来才认为成功
-        [ -e *.gz ] && echo "::set-output name=status::success"
-        [ -e *.img ] && echo "::set-output name=status::success"
+        [ -f *.gz ] && echo "::set-output name=status::success"
+        [ -f *.img ] && echo "::set-output name=status::success"
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
@@ -225,7 +225,7 @@ jobs:
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
-        COMPILE_STATUS=$ {{ steps.tag.outputs.status }}
+        COMPILE_STATUS=${{ steps.tag.outputs.status }}
         echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
         echo "编译结果: `[ $COMPILE_STATUS = 'success' ] && echo '🟢' || echo '🔴'`" >> tgmsg.txt
         echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
