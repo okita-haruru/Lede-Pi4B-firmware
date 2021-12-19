@@ -51,7 +51,7 @@ jobs:
 
     - name: Gethering some information
       run: |
-        echo "BUILD_TAG=`$RELEASE_TAG\\-$(date +"%Y\\.%m\\.%d\\-%H%M%S")`" >> $GITHUB_ENV
+        echo "BUILD_TAG=$RELEASE_TAG\\-$(date +"%Y\\.%m\\.%d\\-%H%M%S")" >> $GITHUB_ENV
 
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true'
