@@ -14,6 +14,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: 0 0 * * *
   repository_dispatch:
   workflow_dispatch:
     inputs:
@@ -71,6 +73,8 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
+        git config --global user.email "git@github.com"
+        git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
