@@ -56,7 +56,10 @@ jobs:
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true'
       run: |
-        MESSAGE_ID=`curl -k -d chat_id=${{ secrets.TGID }} -d "text=正在编译新的固件 ${{ env.BUILD_TAG }},请耐心等待 😋💐 ${{ github.run_id }}" -d parse_mode=MarkdownV2 "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
+        echo "正在编译新的固件 ${{ env.BUILD_TAG }},请耐心等待 😋💐" > tgmessage.txt
+        echo "[Github Action](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> tgmessage.txt
+        TG_SENDTXT=`cat tgmessage.txt`
+        MESSAGE_ID=`curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SENDTXT" -d parse_mode=MarkdownV2 "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
         echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
 
     - name: Initialization environment
