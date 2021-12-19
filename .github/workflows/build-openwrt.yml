@@ -233,7 +233,6 @@ jobs:
         echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
         echo "编译结果: `[ $COMPILE_STATUS = 'success' ] && echo '🟢' || echo '🔴'`" >> tgmsg.txt
         echo "Canceled: ${{ canceled() }}" >> tgmsg.txt
-        echo "" >> tgmsg.txt
         echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
         cat release.txt >> tgmsg.txt
         TG_SEND_TXT=`cat tgmsg.txt`
