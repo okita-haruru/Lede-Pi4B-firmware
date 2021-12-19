@@ -57,7 +57,7 @@ jobs:
       if: env.SERVERCHAN_SCKEY == 'true'
       run: |
         echo "正在编译新的固件 ${{ env.BUILD_TAG }},请耐心等待 😋💐" > tgmessage.txt
-        echo "[Github Action](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> tgmessage.txt
+        echo "[Github Action](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> tgmessage.txt
         TG_SENDTXT=`cat tgmessage.txt`
         TG_RESULT=`curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SENDTXT" -d parse_mode=MarkdownV2 "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"`
         MESSAGE_ID=echo "$TG_RESULT" | jq .result.message_id
@@ -227,7 +227,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: TG Message
-      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled() || cancelled
       run: |
         COMPILE_STATUS=${{ steps.tag.outputs.status }}
         echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
