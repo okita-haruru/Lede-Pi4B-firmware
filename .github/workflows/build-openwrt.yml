@@ -193,7 +193,9 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*.gz
+        files: |
+          ${{ env.FIRMWARE }}/*.gz
+          ${{ env.FIRMWARE }}/sha256sums
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
