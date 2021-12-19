@@ -241,8 +241,8 @@ jobs:
           echo "编译结果: 🟡被取消" >> tgmsg.txt
         else
           echo "编译结果: `[ $COMPILE_STATUS = 'success' ] && echo '🟢成功' || echo '🔴失败'`" >> tgmsg.txt
+          echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
+          cat release.txt >> tgmsg.txt
         fi
-        echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
-        cat release.txt >> tgmsg.txt
         TG_SEND_TXT=`cat tgmsg.txt`
         curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SEND_TXT" -d parse_mode=MarkdownV2 -d reply_to_message_id="${{ env.MESSAGE_ID }}" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
