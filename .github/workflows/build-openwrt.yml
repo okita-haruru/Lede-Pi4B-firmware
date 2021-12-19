@@ -20,7 +20,7 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: false
-        default: 'false'
+        default: 'true'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -50,8 +50,8 @@ jobs:
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true'
       run: |
-         MESSAGE_ID=`curl -k --data chat_id=${{ secrets.TGID }} --data "text=正在为您编译新的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M"),请耐心等待...... 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
-         echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
+        MESSAGE_ID=`curl -k --data chat_id=${{ secrets.TGID }} --data "text=正在为您编译新的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M"),请耐心等待...... 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
+        echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
 
     - name: Initialization environment
       env:

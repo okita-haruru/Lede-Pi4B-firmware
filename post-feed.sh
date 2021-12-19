@@ -4,6 +4,7 @@
 # 请勿取消上面行的注释
 
 LEDE_ROOT=$(pwd)
+PACKAGE_ROOT=$LEDE_ROOT/package
 
 # 修改默认ip
 sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_generate
@@ -26,8 +27,11 @@ rm -rf ../lean/luci-app-unblockmusic
 git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 
 # Mentohust 校园网上网
-git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git mentohust
-git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust.git
+# git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk.git mentohust
+# git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust.git
+# minieap
+svn co https://github.com/immortalwrt/packages/trunk/net/minieap ../net/minieap
+git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap.git
 
 # 配置argon主题
 [ -e ../lean/luci-theme-argon ] && rm -rf ../lean/luci-theme-argon
@@ -65,4 +69,10 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
 echo "Leving package/community"
 popd
 
-exit 0
+echo "Patching cpufreq"
+rm -rf package/lean/luci-app-cpufreq
+svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
+ln -sf ./feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
+sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
