@@ -227,7 +227,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: TG Message
-      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled() || cancelled()
+      if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
         COMPILE_STATUS=${{ steps.tag.outputs.status }}
         echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
