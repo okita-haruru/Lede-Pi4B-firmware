@@ -60,7 +60,7 @@ jobs:
         echo "[Github Action](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> tgmessage.txt
         TG_SENDTXT=`cat tgmessage.txt`
         TG_RESULT=`curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SENDTXT" -d parse_mode=MarkdownV2 "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"`
-        MESSAGE_ID=echo "$TG_RESULT" | jq .result.message_id
+        MESSAGE_ID=`echo "$TG_RESULT" | jq .result.message_id`
         echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
 
     - name: Initialization environment
@@ -232,6 +232,8 @@ jobs:
         COMPILE_STATUS=${{ steps.tag.outputs.status }}
         echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
         echo "编译结果: `[ $COMPILE_STATUS = 'success' ] && echo '🟢' || echo '🔴'`" >> tgmsg.txt
+        echo "Canceled: ${{ canceled() }}" >> tgmsg.txt
+        echo "" >> tgmsg.txt
         echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
         cat release.txt >> tgmsg.txt
         TG_SEND_TXT=`cat tgmsg.txt`
