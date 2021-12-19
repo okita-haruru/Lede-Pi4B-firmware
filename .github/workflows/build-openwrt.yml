@@ -161,8 +161,8 @@ jobs:
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         # 只有存在.gz或者.img的文件被编译出来才认为成功
-        [ -f *.gz ] && echo "::set-output name=status::success"
-        [ -f *.img ] && echo "::set-output name=status::success"
+        [ -n "$(find . -name "*.gz" | head -1)" ] && echo "::set-output name=status::success"
+        [ -n "$(find . -name "*.img" | head -1)" ] && echo "::set-output name=status::success"
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
