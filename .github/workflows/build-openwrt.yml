@@ -49,10 +49,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
+    - name: Gethering some information
+      run: |
+        echo "BUILD_TAG=`$RELEASE_TAG\\-$(date +"%Y\\.%m\\.%d\\-%H%M%S")`" >> $GITHUB_ENV
+
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true'
       run: |
-        MESSAGE_ID=`curl -k --data chat_id=${{ secrets.TGID }} --data "text=正在为您编译新的$RELEASE_TAG-$(date +"%Y.%m.%d-%H%M"),请耐心等待...... 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
+        MESSAGE_ID=`curl -k --data chat_id=${{ secrets.TGID }} --data "text=正在编译新的固件 ${{ env.BUILD_TAG }},请耐心等待 😋💐" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage" | jq .result.message_id`
         echo "MESSAGE_ID=$MESSAGE_ID" >> $GITHUB_ENV
 
     - name: Initialization environment
@@ -222,7 +226,7 @@ jobs:
       if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
         COMPILE_STATUS=$ {{ steps.tag.outputs.status }}
-        echo "$RELEASE_TAG\\-$(date +"%Y\\.%m\\.%d\\-%H%M") 固件编译完成了" > tgmsg.txt
+        echo "${{ env.BUILD_TAG }}固件编译完成了 " > tgmsg.txt
         echo "编译结果: `[ $COMPILE_STATUS = 'success' ] && echo '🟢' || echo '🔴'`" >> tgmsg.txt
         echo "[Github Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.tag.outputs.release_tag }})" >> tgmsg.txt
         cat release.txt >> tgmsg.txt
