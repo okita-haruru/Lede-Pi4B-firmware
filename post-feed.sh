@@ -13,6 +13,10 @@ sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_genera
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='MikuWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i 's/OpenWrt /MikuWrt /g'
 
+# fix netdata
+rm -rf ./feeds/packages/admin/netdata
+svn co https://github.com/WYC-2020/packages/trunk/admin/netdata ./feeds/packages/admin/netdata
+
 [ ! -e package/community ] && mkdir package/community
 echo "Entering package/community"
 pushd package/community
