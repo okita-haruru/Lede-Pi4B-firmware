@@ -215,8 +215,8 @@ jobs:
     - name: TG Message
       if: env.SERVERCHAN_SCKEY == 'true' && !cancelled()
       run: |
-        echo "我亲爱的主人您要编译的$RELEASE_TAG\\-$(date +"%Y.%m.%d-%H%M")固件编译完成" > tgmsg.txt
-        echo "status:${{ steps.tag.outputs.status }}" >> tgmsg.txt
+        echo "我亲爱的主人您要编译的$RELEASE_TAG\\-$(date +"%Y\\.%m\\.%d\\-%H%M")固件编译完成" > tgmsg.txt
+        echo "status: ${{ steps.tag.outputs.status }}" >> tgmsg.txt
         cat release.txt >> tgmsg.txt
         TG_SEND_TXT=`cat tgmsg.txt`
         curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SEND_TXT" -d parse_mode=MarkdownV2 -d reply_to_message_id="${{ env.MESSAGE_ID }}" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
