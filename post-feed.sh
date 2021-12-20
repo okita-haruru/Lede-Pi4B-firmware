@@ -36,7 +36,8 @@ git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblocknetea
 # git clone --depth=1 https://github.com/BoringCat/luci-app-mentohust.git
 # minieap
 svn co https://github.com/immortalwrt/packages/trunk/net/minieap ../net/minieap
-git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap.git
+svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-minieap
+# git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap.git
 
 # 配置argon主题
 [ -e ../lean/luci-theme-argon ] && rm -rf ../lean/luci-theme-argon
