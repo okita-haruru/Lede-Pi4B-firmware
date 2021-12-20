@@ -162,7 +162,7 @@ jobs:
         echo "check"
         [ -n "$(find . -name "*.gz" | head -1)" ] && echo "::set-output name=status::success"
         [ -n "$(find . -name "*.img" | head -1)" ] && echo "::set-output name=status::success"
-        echo "check2
+        echo "check2"
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
     - name: Upload firmware directory
