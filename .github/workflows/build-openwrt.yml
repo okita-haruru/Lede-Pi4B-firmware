@@ -22,6 +22,10 @@ on:
       ssh:
         description: 'SSH connection to Actions'
         required: false
+        default: 'false'
+      cache:
+        description: 'Enable cache'
+        required: false
         default: 'true'
 
 env:
@@ -88,6 +92,7 @@ jobs:
 
     - name: Cache
       uses: klever1988/cachewrtbuild@main
+      if: (github.event.inputs.cache == 'true' && github.event.inputs.cache != 'false') || !contains(github.event.action, 'cache')
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
