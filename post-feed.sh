@@ -66,11 +66,14 @@ git clone --depth=1 https://github.com/destan19/OpenAppFilter.git
 git clone --depth=1 https://github.com/tty228/luci-app-serverchan.git
 
 # luci-app-ssr-plus
-git clone --depth=1 https://github.com/fw876/helloworld.git
+# git clone --depth=1 https://github.com/fw876/helloworld.git
 
 # luci-app-vssr
-git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
-git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
+# git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
+# git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
+
+# passwall
+git clone -b hello https://github.com/xiaorouji/openwrt-passwall
 
 echo "Leving package/community"
 popd
