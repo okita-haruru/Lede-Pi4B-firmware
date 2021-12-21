@@ -201,7 +201,7 @@ jobs:
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> release.txt
+        echo "[本次编译的Actions页面](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
