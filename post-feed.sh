@@ -73,7 +73,7 @@ git clone --depth=1 https://github.com/tty228/luci-app-serverchan.git
 # git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
 
 # passwall
-git clone -b hello https://github.com/xiaorouji/openwrt-passwall
+git clone -b https://github.com/xiaorouji/openwrt-passwall
 
 echo "Leving package/community"
 popd
