@@ -251,4 +251,5 @@ jobs:
           cat release.txt >> tgmsg.txt
         fi
         TG_SEND_TXT=`cat tgmsg.txt`
+        echo $TG_SEND_TXT
         curl -k -d chat_id=${{ secrets.TGID }} -d text="$TG_SEND_TXT" -d parse_mode=MarkdownV2 -d reply_to_message_id="${{ env.MESSAGE_ID }}" "https://api.telegram.org/bot${{ secrets.TG_TOKEN }}/sendMessage"
