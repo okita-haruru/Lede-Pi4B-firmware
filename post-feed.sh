@@ -41,7 +41,7 @@ svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-minieap
 
 # 配置argon主题
 [ -e ../lean/luci-theme-argon ] && rm -rf ../lean/luci-theme-argon
-git clone -b 18.06 --depth=1 https://github.com/jerrykuku/luci-theme-argon.git
+git clone -b revert-271-18.06_bing --depth=1 https://github.com/jerrykuku/luci-theme-argon.git
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config.git
 sed -i 's/luci-theme-bootstrap/luci-theme-argon-18.06/g' $LEDE_ROOT/feeds/luci/collections/luci/Makefile
 [ -e $LEDE_ROOT/data/argon-background.jpg ] && mv $LEDE_ROOT/data/argon-background.jpg luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
