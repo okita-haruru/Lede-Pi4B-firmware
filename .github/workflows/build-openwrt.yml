@@ -43,7 +43,7 @@ env:
   DATA_DIR: data
   TZ: Asia/Shanghai
   RELEASE_TAG: R2S
-  SERVERCHAN_SCKEY: true
+  SERVERCHAN_SCKEY: false
 
 jobs:
   build:
