@@ -11,13 +11,13 @@ alias popd='popd $1 > /dev/null'
 
 # 修改默认ip
 echo "Patching host ip"
-sed -i 's/192.168.1.1/192.168.39.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.234.1/g' package/base-files/files/bin/config_generate
 # 修改lede默认的腾讯云镜像为清华镜像
 # sed -i 's#mirrors.cloud.tencent.com/lede#mirrors.tuna.tsinghua.edu.cn/openwrt#g' package/lean/default-settings/files/zzz-default-settings
 # 修改主机名
 echo "Patching host name"
-sed -i '/uci commit system/i\uci set system.@system[0].hostname='MikuWrt'' package/lean/default-settings/files/zzz-default-settings
-sed -i 's/OpenWrt /MikuWrt /g'
+sed -i '/uci commit system/i\uci set system.@system[0].hostname='OkitaWrt'' package/lean/default-settings/files/zzz-default-settings
+sed -i 's/OpenWrt /OkitaWrt /g' package/lean/default-settings/files/zzz-default-settings
 
 # fix netdata
 rm -rf ./feeds/packages/admin/netdata
@@ -78,12 +78,12 @@ git clone -b https://github.com/xiaorouji/openwrt-passwall
 echo "Leving package/community"
 popd
 
-echo "Patching cpufreq"
-rm -rf package/lean/luci-app-cpufreq
-svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
-ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
-sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+# echo "Patching cpufreq"
+# rm -rf package/lean/luci-app-cpufreq
+# svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
+# ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
+# sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+# sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+# sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 
 git am $GITHUB_WORKSPACE/patches/*.patch
